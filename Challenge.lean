@@ -60,7 +60,7 @@ def compEdgeCount (G : SimpleGraph n) : Nat :=
 
 /-- A list of vertices forms a valid walk in `G` when every consecutive pair is adjacent. -/
 def IsWalk (G : SimpleGraph n) (l : List (Fin n)) : Prop :=
-  ∀ (k : Nat) (h : k + 1 < l.length), G.adj l[k] l[k + 1] = true
+  ∀ (k : Nat) (h : k + 1 < l.length), G.adj (l[k]'(Nat.lt_of_succ_lt h)) (l[k + 1]'h) = true
 
 /-- `G` is connected if every pair of vertices is joined by a nonempty walk. -/
 def IsConnected (G : SimpleGraph n) : Prop :=
