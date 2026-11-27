@@ -1,0 +1,162 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Written on the Wall II, Conjecture 208: A complement-edge and matching condition for Hamiltonian paths"
+  description: >-
+    A self-contained, zero-dependency Lean 4 proof of Conjecture 208 from
+    Ermelinda DeLaViña's "Written on the Wall II" (conjectures of Graffiti.pc,
+    announced January 12, 2006): for every finite simple connected graph G on
+    n > 1 vertices, if (1/2) * (1 + (2/3) * |E(Ḡ)|) ≤ μ(G) — equivalently
+    3 + 2 * |E(Ḡ)| ≤ 6 * μ(G) or |E(Ḡ)| + 2 ≤ 3 * μ(G), where Ḡ is the
+    complement of G and μ(G) is the matching number — then G has a Hamiltonian
+    path. Using only Lean 4 core (no Mathlib or external dependencies), the
+    formalization proves the base cases n = 2, 3, passes by strong induction on
+    |E(Ḡ)| to an edge-maximal non-traceable supergraph, establishes Chvátal's
+    extremal non-edge lemma via the universal-vertex extension G+ = G + v* and
+    Pósa flipping, sums complement degrees to obtain 2|E(Ḡ)| ≥ i(2n + 1 - 3i),
+    eliminates all odd n ≥ 5 and all even n ≥ 10 by a quadratic dichotomy, and
+    resolves the four remaining finite pairs (n, i) ∈ {(4, 2), (6, 2), (6, 3),
+    (8, 4)} using matching size and explicit 6-vertex Hamiltonian paths.
+  authors:
+    - "Ehud Tamir"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Ehud Tamir"
+
+classification:
+  arxiv: ["math.CO"]
+  msc2020: ["05C45", "05C70", "05C07"]
+
+sources:
+  - title: "A self-contained Lean 4 proof of Written on the Wall II Conjecture 208"
+    authors:
+      - "Ehud Tamir"
+    contributors:
+      - name: "Antigravity (Google DeepMind)"
+        role: "AI agent that scouted the problem, discovered the proof, wrote the Lean 4 formalization, and generated the independent verification script"
+    id: "https://github.com/ehudt/wowii-conjecture-208"
+    type: "original-proof"
+    location: "PROOF.md (human-readable proof); WOWII208/Proof.lean (Lean 4 proof)"
+    relationship: "other"
+    note: >-
+      First publicly archived and machine-checked proof of WOWII Conjecture 208
+      known to the author as of November 26-27, 2026. On the live University of
+      Houston-Downtown WOWII database, Conjecture 208 is listed with
+      status: "open" and substatus: "pendingreview" with an empty comment list;
+      searches of arXiv, Palomar Registry, google-deepmind/formal-conjectures,
+      therefore.academy, Zenodo, and ResearchGate found no prior published or
+      archived proof.
+  - title: "Written on the Wall II (Conjectures of Graffiti.pc), Conjecture 208"
+    authors:
+      - "Ermelinda DeLaViña"
+    id: "https://www.uhd.edu/academics/sciences/mathematics-statistics/wowii/"
+    type: "web post"
+    location: "Batch 'Sufficient conditions for Hamiltonian Paths', announced Jan 12, 2006 (id 208)"
+    relationship: "background"
+    note: "Original conjecture statement and invariant definitions (defs 67, 31, 85, 2)."
+  - title: "On Hamilton's ideals"
+    authors:
+      - "Václav Chvátal"
+    id: "https://doi.org/10.1016/0095-8956(72)90020-2"
+    type: "paper"
+    location: "Journal of Combinatorial Theory, Series B, 12(2):163-168, 1972"
+    relationship: "background"
+    note: "Classical extremal non-edge / degree-sequence technique for Hamiltonian paths, reproved here from scratch in Lean 4 core."
+
+related_formalizations: []
+
+status:
+  scope: >-
+    Full proof of Written on the Wall II Conjecture 208 for all finite simple
+    connected graphs on n > 1 vertices represented on Fin n, stated in exact
+    denominator-cleared natural number form 3 + 2 * |E(Ḡ)| ≤ 6 * μ(G), in
+    equivalent integer form |E(Ḡ)| + 2 ≤ 3 * μ(G), and in direct existential
+    matching form, together with matchingNumber_spec certifying exactness of
+    the matching number definition.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "WOWII208.SimpleGraph.wowii_conjecture_208"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+
+automation:
+  methods:
+    - method: "autonomous"
+      models: ["Antigravity (Google DeepMind)"]
+      framework: "Antigravity agentic IDE"
+      tool_setup: >-
+        Autonomous agent session given the high-level goal of finding and
+        formally verifying a proof or refutation of an open conjecture in
+        Lean 4. The agent scouted open conjectures from Written on the Wall II,
+        verified novelty across public registries and repositories, discovered
+        the Chvátal extremal non-edge + complement-degree proof, wrote the
+        standalone Lean 4 formalization from scratch with zero dependencies,
+        and wrote an independent Python exhaustive verifier (verify.py) over
+        225,915 graphs (n = 2..7).
+      cost:
+        wall_time: "about 1 hour elapsed"
+        spend_usd: "subscription-based"
+        hardware: "local macOS ARM64 machine"
+      prompting_notes: >-
+        High-level user request for an open conjecture proof/refutation
+        formally verified in Lean 4 without human mathematical intervention.
+  spend_usd: "subscription-based"
+  notes: >-
+    The human author did not write proof code or manually verify the informal
+    proof; mathematical correctness rests on Lean 4's kernel verification,
+    Comparator verification against Challenge.lean, and the independent
+    exhaustive Python check.
+
+fidelity:
+  divergences: >-
+    None known in mathematical content. Rather than using real/rational
+    division, the statement clears denominators exactly over Nat:
+    (1/2) * (1 + (2/3) * e) ≤ μ is algebraically equivalent over Nat to
+    3 + 2 * e ≤ 6 * μ (and by parity to e + 2 ≤ 3 * μ). Every graph on n
+    vertices is represented up to relabeling as a SimpleGraph on Fin n with
+    decidable Boolean adjacency.
+
+review:
+  status: "self-assessed"
+  reviewers: []
+  notes: >-
+    Verified locally with Lean 4.36.0 (`lake build`, 0 errors, 0 warnings,
+    0 sorry, 0 native_decide, standard axioms only) and cross-checked on all
+    27,475 labeled connected graphs for n = 2..6 and all 198,440 graphs with
+    |E(Ḡ)| ≤ 7 for n = 7 in verify.py. Informal proof in PROOF.md has not
+    been human peer-reviewed.
+
+alignment:
+  namespace: "WOWII208.SimpleGraph"
+  statements:
+    - source: "Written on the Wall II, Conjecture 208 (Jan 12, 2006)"
+      lean: "WOWII208.SimpleGraph.wowii_conjecture_208"
+      module: "Challenge / Solution"
+      status: "proved"
+      note: "Exact denominator-cleared natural-number formulation 3 + 2 * |E(Ḡ)| ≤ 6 * μ(G)."
+    - source: "Written on the Wall II, Conjecture 208 (equivalent integer form)"
+      lean: "WOWII208.SimpleGraph.wowii_conjecture_208_int"
+      module: "Challenge / Solution"
+      status: "proved"
+      note: "Parity-tightened equivalent integer form |E(Ḡ)| + 2 ≤ 3 * μ(G)."
+    - source: "Written on the Wall II, Conjecture 208 (explicit matching form)"
+      lean: "WOWII208.SimpleGraph.wowii_conjecture_208_of_matching"
+      module: "Challenge / Solution"
+      status: "proved"
+      note: "Direct existential form assuming any valid matching M satisfying the inequality."
+    - source: "Written on the Wall II, Definition 2 (matching number exactness)"
+      lean: "WOWII208.SimpleGraph.matchingNumber_spec"
+      module: "Challenge / Solution"
+      status: "proved"
+      note: "Certifies that matchingNumber is attained by a valid matching and bounds all matchings."
+
+acknowledgements: >-
+  Ermelinda DeLaViña and Siemion Fajtlowicz for the Written on the Wall II /
+  Graffiti.pc conjecture collection; the Lean 4 team and Palomar Registry
+  maintainers for Lean 4, Lake, and Comparator.

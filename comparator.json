@@ -1,0 +1,12 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "WOWII208.SimpleGraph.matchingNumber_spec",
+    "WOWII208.SimpleGraph.wowii_conjecture_208",
+    "WOWII208.SimpleGraph.wowii_conjecture_208_int",
+    "WOWII208.SimpleGraph.wowii_conjecture_208_of_matching"
+  ],
+  "definition_names": [],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+}
